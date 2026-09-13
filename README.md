@@ -1,33 +1,36 @@
 # 🎙️ Voice Message System
 
-A **voice-controlled messaging system built with Python** that allows users to send and receive messages using their voice.
+A **voice-controlled messaging system built with Python** that enables users to send and receive messages through voice commands.
 
-The application combines **speech recognition, text-to-speech, audio recording, and HTTP-based server communication** to create a hands-free messaging experience.
+The project combines **speech recognition, text-to-speech, audio recording, and client-server communication** to create a hands-free messaging experience.
 
-## ✨ Features
+## 🚀 Features
 
-* 🎤 Voice-controlled interface
-* 🎙️ Record voice messages directly from the microphone
-* 📤 Upload recorded voice messages to a server
+* 🎤 Voice-controlled commands
+* 🎙️ Record voice messages using a microphone
+* 📤 Upload voice recordings to a server
 * 📥 Receive messages from the server
-* 🔊 Read received text messages aloud
-* 🗣️ Speech-to-text using Google Speech Recognition
-* 📴 Offline speech recognition fallback using Sphinx
-* 🚪 Voice commands to exit the application
-* 🌐 Client-server communication using HTTP requests
+* 🔊 Convert received text into speech
+* 🗣️ Google Speech Recognition for voice input
+* 📴 Sphinx fallback for offline speech recognition
+* 🌐 HTTP-based client-server communication
 * 🔄 Automatic message checking
+* 🗑️ Confirmation of received messages
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-* **Python**
-* **SpeechRecognition**
-* **pyttsx3**
-* **NumPy**
-* **SciPy**
-* **SoundDevice**
-* **Requests**
-* **Playsound**
-* **WAV Audio Processing**
+| Technology                | Purpose                             |
+| ------------------------- | ----------------------------------- |
+| Python                    | Core programming language           |
+| SpeechRecognition         | Speech-to-text                      |
+| Google Speech Recognition | Online voice recognition            |
+| CMU Sphinx                | Offline speech recognition fallback |
+| pyttsx3                   | Text-to-speech                      |
+| SoundDevice               | Audio recording                     |
+| NumPy                     | Audio data processing               |
+| SciPy                     | WAV/audio processing                |
+| Requests                  | HTTP communication                  |
+| Playsound                 | Audio playback                      |
 
 ## 📂 Project Structure
 
@@ -41,56 +44,53 @@ voice-message/
 
 ### `pi.py`
 
-The main voice-controlled messaging client.
+Main voice-controlled client responsible for:
 
-It handles:
-
-* Voice commands
-* Speech recognition
-* Text-to-speech
-* Receiving messages
+* Processing voice commands
+* Recognizing speech
+* Converting text to speech
 * Recording voice messages
-* Uploading audio to the server
+* Uploading audio
+* Receiving messages
 * Confirming received messages
 
 ### `client.py.py`
 
-A simpler audio client that:
+A basic audio client that:
 
-1. Records audio for a fixed duration.
-2. Uploads the WAV file to a server.
-3. Receives the server response.
-4. Plays the returned audio.
-5. Deletes temporary audio files.
+1. Records audio from the microphone.
+2. Saves it as a WAV file.
+3. Uploads the recording to the server.
+4. Receives the server response.
+5. Plays the returned audio.
+6. Removes temporary files.
 
 ## ⚙️ Installation
 
-### 1. Clone the repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/crazyninja181/voice-message.git
 cd voice-message
 ```
 
-### 2. Install dependencies
+### Install dependencies
 
 ```bash
 pip install requests pyttsx3 SpeechRecognition numpy scipy sounddevice playsound pocketsphinx
 ```
 
-Depending on your system, additional microphone/audio dependencies may be required.
+> Depending on your operating system, additional audio/microphone dependencies may be required.
 
-## ▶️ Running the Voice Messaging System
+## ▶️ Usage
 
-Run the main program:
+Start the main application:
 
 ```bash
 python pi.py
 ```
 
-After starting, the application provides voice instructions and waits for a command.
-
-## 🎤 Voice Commands
+The program starts listening for voice commands.
 
 ### Receive a message
 
@@ -100,9 +100,9 @@ Say:
 receive audio
 ```
 
-The application checks the server for new messages. When a message is received, it is spoken aloud using text-to-speech.
+The application checks the server for a new message and reads the received text aloud.
 
-### Send a voice message
+### Send a message
 
 Say:
 
@@ -110,7 +110,7 @@ Say:
 send audio
 ```
 
-The application records your voice, saves it as a WAV file, and uploads the recording to the server.
+The application records your voice and uploads the resulting WAV file to the server.
 
 ### Exit
 
@@ -120,130 +120,113 @@ You can say:
 stop
 ```
 
-or:
-
 ```text
 exit
 ```
 
-or:
+or
 
 ```text
 quit
 ```
 
-## 🔄 How It Works
+## 🔄 System Workflow
 
 ```text
-                    USER
-                      │
-                      ▼
-              🎤 Voice Command
-                      │
-                      ▼
-             Speech Recognition
-                      │
-            ┌─────────┴─────────┐
-            │                   │
-         RECEIVE              SEND
-            │                   │
-            ▼                   ▼
-      Check Server         Record Voice
-            │                   │
-            ▼                   ▼
-      Receive Message       WAV File
-            │                   │
-            ▼                   ▼
-       Text-to-Speech       Upload
-            │                   │
-            ▼                   ▼
-       🔊 User hears        Server
-         message            receives it
+                 ┌──────────────┐
+                 │     User     │
+                 └──────┬───────┘
+                        │
+                        ▼
+                🎤 Voice Command
+                        │
+                        ▼
+              Speech Recognition
+                        │
+               ┌────────┴────────┐
+               │                 │
+               ▼                 ▼
+           SEND AUDIO        RECEIVE AUDIO
+               │                 │
+               ▼                 ▼
+         Record Voice        Check Server
+               │                 │
+               ▼                 ▼
+           WAV File          Get Message
+               │                 │
+               ▼                 ▼
+        Upload to Server     Text-to-Speech
+               │                 │
+               ▼                 ▼
+             Server          🔊 User hears
 ```
 
-## 🌐 Server Communication
+## 🌐 API Communication
 
-The application communicates with a backend server through HTTP endpoints.
+The voice client communicates with the backend using HTTP requests.
 
-The main client uses endpoints for:
+The main endpoints include:
 
 ```text
-GET   /get
-POST  /upload
-POST  /confirm_text
+GET  /get
+POST /upload
+POST /confirm_text
 ```
 
-The server URL is configured in `pi.py`.
+The server address is configured inside `pi.py`.
 
-Before using the project with your own backend, update:
+To connect the project to another backend, update the server configuration:
 
 ```python
 SERVER_BASE = "YOUR_SERVER_URL"
 ```
 
-and configure the corresponding API endpoints.
+## 🧠 Speech Recognition
 
-## 🗣️ Speech Recognition
+The application uses **Google Speech Recognition** with the `en-IN` language configuration.
 
-The system primarily uses **Google Speech Recognition** with the `en-IN` language setting.
+If online recognition fails, the application attempts to use **CMU Sphinx** as a fallback.
 
-If the Google recognition request fails, the application attempts to use **Sphinx** as an offline fallback.
-
-This provides basic voice recognition even when the online recognition service is unavailable.
+This gives the system basic offline speech-recognition capability.
 
 ## 🔊 Text-to-Speech
 
-The project uses **pyttsx3** to convert text into speech.
+`pyttsx3` is used to convert text into speech.
 
-This allows the application to communicate with the user without requiring a graphical interface.
+This allows the user to interact with the application without constantly looking at a screen.
 
-For example:
+## 🎯 Applications
 
-```text
-Voice controlled message system activated.
-
-Say receive audio to listen messages.
-
-Say send audio to record voice.
-
-Say stop or exit to quit.
-```
-
-## 🎯 Use Cases
-
-This project can be used as a foundation for:
+The project can serve as a foundation for:
 
 * ♿ Accessibility-focused communication
 * 🎙️ Hands-free messaging
-* 🥧 Raspberry Pi voice projects
-* 🌐 Client-server communication
+* 🥧 Raspberry Pi projects
+* 📡 IoT communication
 * 🤖 Voice-controlled applications
-* 📡 IoT communication systems
-* 🔊 Audio messaging platforms
+* 🔊 Audio messaging systems
 
-## 🚀 Future Improvements
+## 🔮 Future Improvements
 
-* 🔐 Add user authentication
-* 🔒 Encrypt voice messages
-* 👥 Support multiple users
-* 💬 Support text and voice messages
-* 🗄️ Add database storage
-* 🔔 Real-time message notifications
-* 📱 Build a mobile application
-* 🌍 Add multilingual speech recognition
-* 🧠 Add AI-based message processing
-* 📊 Add message history
-* 🛜 Improve handling of network failures
-* 🎨 Add a graphical interface
-* 🥧 Optimize specifically for Raspberry Pi
+* 🔐 User authentication
+* 🔒 End-to-end message encryption
+* 👥 Multi-user messaging
+* 🗄️ Database integration
+* 🔔 Real-time notifications
+* 📱 Mobile application
+* 🌍 Multi-language support
+* 🧠 AI-powered message processing
+* 📊 Message history
+* 🎨 Graphical user interface
+* 🛜 Better network-error handling
+* 🥧 Raspberry Pi optimization
 
 ## 👨‍💻 Author
 
 **crazyninja181**
 
-GitHub:
-https://github.com/crazyninja181
+[GitHub Profile](https://github.com/crazyninja181)
 
 ## 📄 License
 
-This project is intended for educational and development purposes.
+This project is created for **educational and development purposes**.
